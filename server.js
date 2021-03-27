@@ -24,7 +24,6 @@ app.get("/", function (req, res) {
   // API Routes
   app.get('/api/notes', function(req,res) {
     fs.readFile(path.join(__dirname, './db/db.json'), function(err, data) {
-        console.log(data);
         res.json(JSON.parse(data));
     });
 });
