@@ -1,5 +1,6 @@
 // Dependencies
 const express = require('express');
+const {v4 : uuidv4} = require('uuid')
 const path = require('path');
 const fs = require('fs');
 
@@ -29,13 +30,11 @@ app.get("/", function (req, res) {
 });
 app.post('/api/notes', function(req, res) {
     const note = {
+        id: uuidv4(),
         title: req.body.title,
         text: req.body.text
     };
     fs.readFile(path.join(__dirname, './db/db.json'), function(err, data) {
-        console.log("here4")
-        console.log(data);
-        console.log("here after")
         var parsedNote = JSON.parse(data);
         parsedNote.push(note);
         parsedNote = JSON.stringify(parsedNote);
