@@ -12,15 +12,19 @@ module.exports = (app) => {
             var notes = JSON.parse(data);
         }
 
-    app.get('/api/notes', (req, res) => {res.json(notes)});
+    app.get('/api/notes', (req, res) => {res.parse(notes)});
 
 
     app.post('/api/notes', (req, res) => {
        var note = req.body;
        notes.push(note); 
        updateNotesFile()
+       return console.log("New Note: " + note.title);
 
     });
+    app.get('/api/notes.:id', (req, res) => {
+        res.json(notes[req.params.id]);
+    })
 
     function updateNotesFile(){
         fs.writeFile(path.join(__dirname, '../db/db.json'), JSON.stringify(notes), (error, data) => {
